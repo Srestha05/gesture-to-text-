@@ -1,0 +1,48 @@
+#define FLEX_FORE_PIN 32    
+#define FLEX_MIDDLE_PIN 33  
+#define FLEX_RING_PIN 34    
+#define FLEX_LITTLE_PIN 35  
+
+int flexForeValue, flexMiddleValue, flexRingValue, flexLittleValue;
+int thresholdFore = 3500;    
+int thresholdMiddle = 3500;  
+int thresholdRing = 3500;    
+int thresholdLittle = 3500;  
+
+void setup() {
+    Serial.begin(115200);
+}
+
+void loop() {
+    flexForeValue = analogRead(FLEX_FORE_PIN);
+    flexMiddleValue = analogRead(FLEX_MIDDLE_PIN);
+    flexRingValue = analogRead(FLEX_RING_PIN);
+    flexLittleValue = analogRead(FLEX_LITTLE_PIN);
+
+    Serial.print("Forefinger: "); Serial.print(flexForeValue);
+    Serial.print(" | Middle Finger: "); Serial.print(flexMiddleValue);
+    Serial.print(" | Ring Finger: "); Serial.print(flexRingValue);
+    Serial.print(" | Little Finger: "); Serial.println(flexLittleValue);
+
+    
+    if (flexForeValue < thresholdFore && flexMiddleValue > thresholdMiddle && flexRingValue < thresholdRing && flexLittleValue < thresholdLittle) {
+        Serial.println("Gesture Detected: L");
+    }
+
+    else if (flexForeValue > thresholdFore && flexMiddleValue < thresholdMiddle && flexRingValue < thresholdRing && flexLittleValue < thresholdLittle) {
+        Serial.println("Gesture Detected: K");
+    }
+    
+    else if (flexForeValue > thresholdFore && flexMiddleValue > thresholdMiddle && flexRingValue < thresholdRing && flexLittleValue < thresholdLittle) {
+        Serial.println("Gesture Detected: F");
+    }
+    
+    else if (flexForeValue > thresholdFore && flexMiddleValue > thresholdMiddle && flexRingValue > thresholdRing && flexLittleValue < thresholdLittle) {
+        Serial.println("Gesture Detected: OK");
+    }
+    else {
+        Serial.println("Gesture: Unknown");
+    }
+    
+    delay(500);  
+}
