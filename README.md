@@ -1,1 +1,2 @@
-# gesture-to-text-
+# gesture control-to-text and voice conversion
+
